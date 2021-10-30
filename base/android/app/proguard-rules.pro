@@ -1,0 +1,1 @@
+-keep class com.example.ondernemend_heiloo_flutter.BuildConfig { *; }

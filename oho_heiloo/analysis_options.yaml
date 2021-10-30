@@ -1,0 +1,113 @@
+analyzer:
+  errors:
+    dead_code: error
+    avoid_empty_else: error
+    avoid_print: warning
+    cancel_subscriptions: error
+    no_duplicate_case_values: error
+    test_types_in_equals: error
+    unnecessary_statements: error
+    unsafe_html: error
+    avoid_catches_without_on_clauses: warning
+    avoid_double_and_int_checks: warning
+    avoid_init_to_null: error
+    avoid_js_rounded_ints: error
+    avoid_renaming_method_parameters: warning
+    avoid_return_types_on_setters: warning
+    avoid_returning_null: warning
+    avoid_returning_null_for_void: error
+    avoid_unnecessary_containers: warning
+    avoid_unused_constructor_parameters: warning
+    await_only_futures: warning
+    camel_case_extensions: warning
+    camel_case_types: warning
+    constant_identifier_names: warning
+    empty_catches: error
+    empty_constructor_bodies: error
+    file_names: error
+    implementation_imports: warning
+    join_return_with_assignment: info
+    lines_longer_than_80_chars: info
+    null_closures: warning
+    omit_local_variable_types: warning
+    prefer_conditional_assignment: warning
+    prefer_contains: info
+    prefer_foreach: info
+    prefer_is_empty: info
+    prefer_is_not_empty: info
+    prefer_null_aware_operators: warning
+    public_member_api_docs: info
+    unawaited_futures: warning
+    unnecessary_await_in_return: warning
+    unnecessary_brace_in_string_interps: warning
+    unnecessary_const: warning
+    unnecessary_new: warning
+    unnecessary_this: warning
+  exclude:
+  - build/**
+  - assets/**
+  - .dart_tool/**
+  - "**/*.g.dart"
+  - "**/*.freezed.dart"
+  - "**/*.mocks.dart"
+  strong-mode:
+    implicit-casts: true
+    # implicit-dynamic: false
+
+linter:
+  # https://dart-lang.github.io/linter/lints/
+  rules:
+  - unawaited_futures # pedantic
+  - unnecessary_final
+  - unnecessary_lambdas
+  - unnecessary_null_aware_assignments
+  - unnecessary_null_checks
+  - unnecessary_nullable_for_final_variable_declarations
+  - unnecessary_parenthesis
+  - unnecessary_statements
+  - use_if_null_to_convert_nulls_to_bools
+  - use_late_for_private_fields_and_variables
+  - use_setters_to_change_properties
+  - use_string_buffers
+  - use_to_and_as_if_applicable
+  - avoid_empty_else
+  - avoid_print
+  - cancel_subscriptions
+  - no_duplicate_case_values
+  - test_types_in_equals
+  - unsafe_html
+#  - avoid_catches_without_on_clauses
+  - avoid_double_and_int_checks
+  - avoid_init_to_null
+  - avoid_js_rounded_ints
+  - avoid_renaming_method_parameters
+  - avoid_return_types_on_setters
+  - avoid_returning_null
+  - avoid_returning_null_for_void
+  - avoid_unnecessary_containers
+  - avoid_unused_constructor_parameters
+  - await_only_futures
+  - camel_case_extensions
+  - camel_case_types
+  - constant_identifier_names
+  - empty_catches
+  - empty_constructor_bodies
+  - file_names
+  - implementation_imports
+  - join_return_with_assignment
+  - lines_longer_than_80_chars
+  - null_closures
+ # - omit_local_variable_types
+  - prefer_conditional_assignment
+  - prefer_contains
+  - prefer_foreach
+  - prefer_is_empty
+  - prefer_is_not_empty
+  - prefer_null_aware_operators
+ # - public_member_api_docs
+ # - sort_constructors_first
+  - unnecessary_await_in_return
+  - unnecessary_brace_in_string_interps
+  - unnecessary_const
+  - unnecessary_new
+  - unnecessary_this
