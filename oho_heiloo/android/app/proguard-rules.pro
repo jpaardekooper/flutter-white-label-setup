@@ -1,1 +1,0 @@
--keep class com.example.oho_heiloo.BuildConfig { *; }
