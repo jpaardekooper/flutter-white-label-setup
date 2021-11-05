@@ -5,9 +5,9 @@ workflows:
   my-workflow:
     publishing:
       app_store_connect:
-        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        api_key: $private_key
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        issuer_id: $issue
         submit_to_testflight: true
         beta_groups:
           - Beta Testers
