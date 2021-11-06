@@ -48,13 +48,13 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
-        app_store_connect:
+      app_store_connect:
         api_key: $private_key
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $issue
         submit_to_testflight: true
         beta_groups:
-          - Beta Testers
+        - Beta Testers
       email:
         recipients:
-          - p_jazzzp@live.nl
+        - p_jazzzp@live.nl
