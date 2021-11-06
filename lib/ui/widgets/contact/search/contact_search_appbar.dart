@@ -24,7 +24,7 @@ class ContactSearchAppBar extends StatelessWidget {
             ? BoardmemberSearch()
             : Container();
       default:
-        return Logo(scale: FlavorAssets.scale);
+        return AppbarLogo();
     }
   }
 
@@ -33,7 +33,7 @@ class ContactSearchAppBar extends StatelessWidget {
     var contactViewModel = Provider.of<ContactState>(context, listen: true);
 
     return AnimatedCrossFade(
-      firstChild: Logo(scale: FlavorAssets.scale),
+      firstChild: AppbarLogo(),
       secondChild: _showSearchOrLogo(context),
       crossFadeState: contactViewModel.searchToggle
           ? CrossFadeState.showSecond

@@ -61,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
     var authState = Provider.of<AuthState>(context, listen: false);
 
     await authState.login(authState.username, authState.password).then((value) {
+      authState.setLoadingToFalse();
       if (value == 200) {
         authState.setInitial();
       } else {
@@ -120,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Hero(
                     tag: 'logo',
-                    child: Logo(scale: FlavorAssets.scale),
+                    child: Logo(),
                   ),
                   SizedBox(
                     height: 40,
@@ -133,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  context.read<AuthState>().loading
+                  Provider.of<AuthState>(context).loading
                       ? Center(
                           child: CircularProgressIndicator(
                               color: Theme.of(context).colorScheme.primary),

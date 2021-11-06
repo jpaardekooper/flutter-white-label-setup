@@ -1,9 +1,9 @@
 import 'package:base/models/contact_user.dart';
 import 'package:base/page/contact/contact_details_page.dart';
 import 'package:base/ui/widgets/contact/ui/cached_image.dart';
-import 'package:base/util/page_route.dart';
 import 'package:flutter/material.dart';
 import 'package:base/state/contact_state.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'package:provider/provider.dart';
 
@@ -98,7 +98,12 @@ class _ContactFavoriteTilesState extends State<ContactFavoriteTiles> {
         provider.disposeSearch();
         provider.setContactId(widget.contact.id!);
         await Navigator.push(
-            context, createRouteTransistion(ContactDetails(widget.page)));
+          context,
+          PageTransition(
+            type: PageTransitionType.rightToLeft,
+            child: ContactDetails(widget.page),
+          ),
+        );
       },
     );
   }

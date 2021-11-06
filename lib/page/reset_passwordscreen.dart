@@ -151,7 +151,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               children: [
                 Hero(
                   tag: 'logo',
-                  child: Logo(scale: FlavorAssets.scale),
+                  child: Logo(),
                 ),
                 SizedBox(
                   height: 40,

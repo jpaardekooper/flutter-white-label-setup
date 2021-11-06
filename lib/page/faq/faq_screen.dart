@@ -28,7 +28,7 @@ class _FaqScreenState extends State<FaqScreen> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Logo(scale: FlavorAssets.scale),
+          title: AppbarLogo(),
           automaticallyImplyLeading: false,
           centerTitle: true),
       body: faq.faqList.isEmpty

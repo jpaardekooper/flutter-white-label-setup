@@ -6,9 +6,8 @@ import 'package:provider/provider.dart';
 import 'dart:io' as Io;
 
 class ProfileImage extends StatefulWidget {
-  const ProfileImage(this.index, this.page, this.size);
+  const ProfileImage({required this.page, required this.size});
 
-  final int index;
   final String page;
   final double size;
 
@@ -129,6 +128,7 @@ class _ProfileImageState extends State<ProfileImage> {
             ? Container(
                 height: widget.size,
                 width: widget.size,
+                constraints: BoxConstraints(minWidth: 10, minHeight: 10),
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.cover,
@@ -161,7 +161,7 @@ class _ProfileImageState extends State<ProfileImage> {
           child: Icon(
             Icons.edit,
             color: Colors.white,
-            size: 20,
+            size: widget.size / 8,
           ),
         ),
       );

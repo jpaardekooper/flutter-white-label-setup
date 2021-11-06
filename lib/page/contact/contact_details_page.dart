@@ -1,4 +1,5 @@
 import 'package:base/models/contact_user.dart';
+import 'package:base/page/contact/contact_detail_skeleton.dart';
 import 'package:base/ui/widgets/components/buttons/contact_back_button.dart';
 import 'package:base/ui/widgets/components/buttons/toggle_edit_contact.dart';
 import 'package:base/ui/widgets/components/logo.dart';
@@ -40,62 +41,70 @@ class _ContactDetailsState extends State<ContactDetails> {
   Widget build(BuildContext context) {
     var provider = Provider.of<ContactState>(context, listen: false);
 
-    return Dismissible(
-      key: UniqueKey(),
-      direction: DismissDirection.startToEnd,
-      onDismissed: (DismissDirection direction) {
+    return WillPopScope(
+      onWillPop: () {
         provider.setEditProfileToFalse();
-
-        Navigator.of(context).pop();
+        Navigator.pop(context);
+        return Future.value(true);
       },
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Logo(scale: FlavorAssets.scale),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          leading: ContactBackButton(
-            function: provider.setEditProfileToFalse,
-          ),
-          actions: [
-            ToggleEditContact(
-              function: provider.toggleEditProfile,
-            )
-          ],
-        ),
-        body: FutureBuilder<ContactUser?>(
-          future: checkUser,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-                return LoadingState(message: 'Gebruiker informatie');
-              case ConnectionState.done:
-                if (snapshot.hasError || snapshot.data == null) {
-                  return Center(
-                    child: Text('Er is iets foutgegaan bij het ophalen'),
-                  );
-                } else {
-                  //als alles goed gaat
-                  return ListView(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    children: [
-                      Header(
-                        maxHeight,
-                        minHeight,
-                        widget.page,
-                      ),
-                      ContactFormView()
-                    ],
-                  );
-                }
+      child: Dismissible(
+        key: UniqueKey(),
+        direction: DismissDirection.startToEnd,
+        onDismissed: (DismissDirection direction) {
+          provider.setEditProfileToFalse();
 
-              default:
-                return LoadingState(message: 'Gebruiker informatie');
-            }
-          },
+          Navigator.of(context).pop();
+        },
+        child: Scaffold(
+          key: _scaffoldKey,
+          // appBar: AppBar(
+          //   backgroundColor: Colors.white,
+          //   title: Logo(scale: FlavorAssets.scale),
+          //   centerTitle: true,
+          //   automaticallyImplyLeading: false,
+          //   leading: ContactBackButton(
+          //     function: provider.setEditProfileToFalse,
+          //   ),
+          //   actions: [
+          //     ToggleEditContact(
+          //       function: provider.toggleEditProfile,
+          //     )
+          //   ],
+          // ),
+          body: FutureBuilder<ContactUser?>(
+            future: checkUser,
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.none:
+                case ConnectionState.waiting:
+                  return LoadingState(message: 'Gebruiker informatie');
+                case ConnectionState.done:
+                  if (snapshot.hasError || snapshot.data == null) {
+                    return Center(
+                      child: Text('Er is iets foutgegaan bij het ophalen'),
+                    );
+                  } else {
+                    //als alles goed gaat
+                    return AdvancedSliverAppBar(page: widget.page);
+                    // ListView(
+                    //   shrinkWrap: true,
+                    //   physics: const ClampingScrollPhysics(),
+                    //   children: [
+                    //     Header(
+                    //       maxHeight,
+                    //       minHeight,
+                    //       widget.page,
+                    //     ),
+                    //     ContactFormView()
+                    //   ],
+                    // );
+                  }
+
+                default:
+                  return LoadingState(message: 'Gebruiker informatie');
+              }
+            },
+          ),
         ),
       ),
     );

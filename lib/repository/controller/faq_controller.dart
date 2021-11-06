@@ -1,10 +1,10 @@
-import 'package:base/repository/repository.dart';
-import 'package:base/repository/repository_interface.dart';
+import 'package:base/repository/faq_repository.dart';
+import 'package:base/repository/interface/faq_repository_interface.dart';
 
 class FaqController {
-  final IHeilooRepository _heilooRepository = HeilooRepository();
+  final IFaqRepository _faqRepository = FaqRepository();
 
   Future<dynamic> fetchFaqData(String token) {
-    return _heilooRepository.getFaqData(token);
+    return _faqRepository.getFaqData(token);
   }
 }

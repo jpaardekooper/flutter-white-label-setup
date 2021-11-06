@@ -37,60 +37,58 @@ class _FavoriteMenuState extends State<FavoriteMenu> {
   @override
   Widget build(BuildContext context) {
     var contactState = Provider.of<ContactState>(context, listen: true);
-    return Container(
-      margin: EdgeInsets.only(bottom: 50),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Material(
-              color: Colors.transparent,
-              child: InkWell(
-                child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      contactState.selectedContactUser.updateIsFavorite(
-                          !contactState.selectedContactUser.isFavorite!);
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              child: IconButton(
+                splashRadius: 20,
+                splashColor: Colors.white.withOpacity(0.5),
+                onPressed: () {
+                  setState(() {
+                    contactState.selectedContactUser.updateIsFavorite(
+                        !contactState.selectedContactUser.isFavorite!);
 
-                      if (contactState.selectedContactUser.isFavorite!) {
-                        contactState
-                            .addFavorite(contactState.selectedContactUser);
-                      } else {
-                        contactState
-                            .removeFavorite(contactState.selectedContactUser);
-                        contactState.removeFavoriteLocal(
-                            contactState.selectedContactUser);
-                      }
+                    if (contactState.selectedContactUser.isFavorite!) {
+                      contactState
+                          .addFavorite(contactState.selectedContactUser);
+                    } else {
+                      contactState
+                          .removeFavorite(contactState.selectedContactUser);
+                      contactState.removeFavoriteLocal(
+                          contactState.selectedContactUser);
+                    }
 
-                      _showMessage();
-                    });
-                  },
-                  icon: Icon(
-                    Icons.star,
-                    color: contactState.selectedContactUser.isFavorite!
-                        ? Theme.of(context).colorScheme.primaryVariant
-                        : Theme.of(context).colorScheme.secondary,
-                  ),
+                    _showMessage();
+                  });
+                },
+                icon: Icon(
+                  Icons.star,
+                  color: contactState.selectedContactUser.isFavorite!
+                      ? Theme.of(context).colorScheme.primaryVariant
+                      : Theme.of(context).colorScheme.secondary,
                 ),
               ),
             ),
-            contactState.selectedContactUser.isBoardMember!
-                ? Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.group,
-                            color:
-                                Theme.of(context).colorScheme.primaryVariant),
-                      ),
+          ),
+          contactState.selectedContactUser.isBoardMember!
+              ? Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.group,
+                          color: Theme.of(context).colorScheme.primaryVariant),
                     ),
-                  )
-                : SizedBox.shrink()
-          ],
-        ),
+                  ),
+                )
+              : SizedBox.shrink()
+        ],
       ),
     );
   }

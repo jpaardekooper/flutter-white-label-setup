@@ -1,10 +1,10 @@
-import 'package:base/repository/repository.dart';
-import 'package:base/repository/repository_interface.dart';
+import 'package:base/repository/interface/social_repository_interface.dart';
+import 'package:base/repository/social_repository.dart';
 
 class SocialController {
-  final IHeilooRepository _heilooRepository = HeilooRepository();
+  final ISocialRepository _socialRepository = SocialRepository();
 
   Future<dynamic> fetchTweets(int count) {
-    return _heilooRepository.getTimelineTweets(count);
+    return _socialRepository.getTimelineTweets(count);
   }
 }

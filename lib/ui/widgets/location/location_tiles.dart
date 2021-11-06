@@ -1,11 +1,10 @@
-import 'package:base/models/location_model.dart';
+import 'package:base/models/spotted_location.dart';
 import 'package:base/page/location/location_detail.dart';
 import 'package:flutter/material.dart';
-import 'package:base/util/page_route.dart';
 
 class LocationTiles extends StatelessWidget {
   LocationTiles(this.location);
-  final Location location;
+  final SpottedLocation location;
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +24,8 @@ class LocationTiles extends StatelessWidget {
           child: InkWell(
             onTap: () {
               FocusScope.of(context).unfocus();
-              Navigator.push(
-                  context, createRouteTransistion(LocationDetail(location)));
+              // Navigator.push(
+              //     context, createRouteTransistion(LocationDetail(location)));
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),

@@ -73,7 +73,7 @@ class _ContactFormFieldState extends State<ContactFormField> {
           color: focus.hasFocus
               ? Theme.of(context).colorScheme.primary
               : Theme.of(context).colorScheme.secondary,
-          fontSize: 16,
+          fontSize: 18,
         ),
         labelText: widget.hint);
   }
@@ -153,24 +153,23 @@ class _ContactFormFieldState extends State<ContactFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: ListTile(
-        leading: widget.leading,
-        title: TextFormField(
-          autofocus: false,
-          keyboardType: keyboardInputType(),
-          style: Theme.of(context).textTheme.bodyText1,
-          minLines: widget.type == ContactFormValidation.discription ? 15 : 1,
-          maxLines: widget.type == ContactFormValidation.discription ? 20 : 1,
-          controller: controller,
-          decoration: inputDecoration(),
-          onSaved: (value) => widget.function(value),
-          validator: (value) => formValidation(value),
-          enabled: ContactFormValidation.email == widget.type ? false : true,
-        ),
-        trailing: widget.trailing ?? SizedBox.shrink(),
+    return ListTile(
+      leading: widget.leading,
+      contentPadding: EdgeInsets.only(bottom: 8, left: 16),
+      minLeadingWidth: 20,
+      title: TextFormField(
+        autofocus: false,
+        keyboardType: keyboardInputType(),
+        style: Theme.of(context).textTheme.bodyText1,
+        minLines: widget.type == ContactFormValidation.discription ? 15 : 1,
+        maxLines: widget.type == ContactFormValidation.discription ? 20 : 1,
+        controller: controller,
+        decoration: inputDecoration(),
+        onSaved: (value) => widget.function(value),
+        validator: (value) => formValidation(value),
+        enabled: ContactFormValidation.email == widget.type ? false : true,
       ),
+      trailing: widget.trailing ?? SizedBox.shrink(),
     );
   }
 }

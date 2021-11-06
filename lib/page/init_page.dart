@@ -31,7 +31,7 @@ class _InitialScreenState extends State<InitialScreen> {
         padding: const EdgeInsets.only(top: kToolbarHeight),
         child: Hero(
           tag: 'logo',
-          child: Image.asset(FlavorAssets.splash, scale: FlavorAssets.scale),
+          child: Image.asset(FlavorAssets.splash),
         ),
       ),
     );

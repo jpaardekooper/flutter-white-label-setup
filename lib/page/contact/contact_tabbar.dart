@@ -7,9 +7,14 @@ import 'boardmember_overview_page.dart';
 import 'contact_overview_page.dart';
 import 'favorite_overview_screen.dart';
 
-class ContactTabbar extends StatelessWidget {
+class ContactTabbar extends StatefulWidget {
   const ContactTabbar({Key? key}) : super(key: key);
 
+  @override
+  State<ContactTabbar> createState() => _ContactTabbarState();
+}
+
+class _ContactTabbarState extends State<ContactTabbar> {
   @override
   Widget build(BuildContext context) {
     var contactViewModel = Provider.of<ContactState>(context, listen: true);

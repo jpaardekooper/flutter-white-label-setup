@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:base/models/location_model.dart';
+import 'package:base/models/spotted_location.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -8,7 +8,7 @@ class LocationHeader extends StatefulWidget {
   const LocationHeader(
       {Key? key, required this.location, required this.isEditing})
       : super(key: key);
-  final Location location;
+  final SpottedLocation location;
   final bool isEditing;
 
   @override

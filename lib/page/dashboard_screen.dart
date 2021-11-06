@@ -1,13 +1,14 @@
 import 'dart:async';
+import 'package:base/helper/shared_preference.dart';
 import 'package:base/page/contact/contact_tabbar.dart';
 import 'package:base/page/events/event_screen.dart';
 import 'package:base/page/faq/faq_screen.dart';
 import 'package:base/page/location/location_page.dart';
 import 'package:base/page/twitter/twitter.dart';
+import 'package:base/state/auth_state.dart';
 import 'package:base/state/location_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:base/state/dashboard_view_model.dart';
 import 'package:provider/provider.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -18,65 +19,180 @@ class DashboardScreen extends StatefulWidget {
 class DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
-    Provider.of<LocationState>(context, listen: false).locationPermission();
     super.initState();
+    Provider.of<LocationState>(context, listen: false).locationPermission();
   }
 
-  final List<Widget> currentTab = [
-    ContactTabbar(),
-    EventScreen(),
-    SocialScreen(),
-    LocationPage(),
-    FaqScreen(),
+  late List<Widget> currentTab;
+
+  List loadedPages = [
+    0,
   ];
+
+  int _currentIndex = 0;
+
+  void onTapDown() {
+    showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(MediaQuery.of(context).size.width,
+          MediaQuery.of(context).size.height, 0, 0),
+      items: getMenuItems(),
+      color: Theme.of(context).scaffoldBackgroundColor,
+    );
+  }
+
+  List<PopupMenuEntry<int>> getMenuItems() => [
+        PopupMenuItem(
+          onTap: () {
+            setState(() {
+              _currentIndex = 4;
+            });
+          },
+          value: 4,
+          textStyle: TextStyle(
+              color: _currentIndex == 4
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.secondary,
+              fontSize: 14),
+          child: Row(
+            children: [
+              Icon(
+                Icons.contact_support_outlined,
+                color: _currentIndex == 4
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.secondary,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text('FAQ')
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          onTap: () {
+            setState(() {
+              _currentIndex = 4;
+            });
+          },
+          textStyle: TextStyle(
+              color: _currentIndex == 5
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.secondary,
+              fontSize: 14),
+          value: 5,
+          child: Row(
+            children: [
+              Icon(
+                Icons.settings,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text('Instellingen ')
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          onTap: () {
+            _currentIndex = 0;
+            Provider.of<LocalStorage>(context, listen: false).clearSession();
+            Provider.of<AuthState>(context, listen: false).logout();
+          },
+          textStyle: TextStyle(
+              color: Theme.of(context).colorScheme.secondary, fontSize: 14),
+          value: 6,
+          child: Row(
+            children: [
+              Icon(
+                Icons.logout,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text('Uitloggen ')
+            ],
+          ),
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<DashboardViewModel>(context);
-
+    currentTab = [
+      const ContactTabbar(),
+      loadedPages.contains(1) ? const EventScreen() : Container(),
+      loadedPages.contains(2) ? const SocialScreen() : Container(),
+      loadedPages.contains(3) ? const LocationPage() : Container(),
+      loadedPages.contains(4) ? const FaqScreen() : Container(),
+    ];
     return SafeArea(
+      bottom: false,
       child: WillPopScope(
         onWillPop: () => Future.value(false),
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.black,
-          body: currentTab[provider.currentIndex],
-          // IndexedStack(
-          //     index: provider.currentIndex, children: currentTab),
-          bottomNavigationBar: SafeArea(
-            child: BottomNavigationBar(
-              selectedItemColor: Theme.of(context).colorScheme.primary,
-              unselectedItemColor: Theme.of(context).colorScheme.secondary,
-              showSelectedLabels: true,
-              showUnselectedLabels: true,
-              type: BottomNavigationBarType.fixed,
-              selectedFontSize: 12,
-              currentIndex: provider.currentIndex,
-              onTap: (index) {
-                provider.setCurrentIndex(index);
-              },
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.perm_contact_calendar_outlined),
-                  label: 'Contacten',
+          body: //currentTab[_currentIndex],
+
+              IndexedStack(index: _currentIndex, children: currentTab),
+          bottomNavigationBar: Material(
+            elevation: 4,
+            child: Container(
+              height: 60,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              alignment: Alignment.topLeft,
+              //   height: 70,
+              child: SafeArea(
+                child: BottomNavigationBar(
+                  elevation: 0,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  selectedItemColor: Theme.of(context).colorScheme.primary,
+                  unselectedItemColor: Theme.of(context).colorScheme.secondary,
+                  showSelectedLabels: true,
+                  showUnselectedLabels: true,
+                  type: BottomNavigationBarType.fixed,
+                  selectedFontSize: 12,
+                  unselectedFontSize: 12,
+                  currentIndex: _currentIndex,
+                  onTap: (index) {
+                    var pages = loadedPages;
+                    if (!pages.contains(index)) {
+                      pages.add(index);
+                    }
+                    if (index != 4) {
+                      setState(() {
+                        _currentIndex = index;
+                        loadedPages = pages;
+                      });
+                    } else {
+                      onTapDown();
+                    }
+                  },
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.perm_contact_calendar_outlined),
+                      label: 'Contacten',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(CupertinoIcons.calendar),
+                      label: 'Events',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.quick_contacts_mail_outlined),
+                      label: 'Social',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.location_on_rounded),
+                      label: 'Locaties',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.more_vert),
+                      label: 'Meer',
+                    ),
+                  ],
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(CupertinoIcons.calendar),
-                  label: 'Events',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.quick_contacts_mail_outlined),
-                  label: 'Social',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.location_on_rounded),
-                  label: 'Locaties',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.contact_support_outlined),
-                  label: 'FAQ',
-                ),
-              ],
+              ),
             ),
           ),
 

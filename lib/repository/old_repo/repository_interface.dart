@@ -1,15 +1,6 @@
 import 'package:http/http.dart';
 
 abstract class IHeilooRepository {
-  /// app user
-  Future<dynamic> login(Map<String, dynamic> loginForm);
-
-  Future<dynamic> checkAndSetSession(String token);
-
-  Future<dynamic> refreshSession(Map<String, dynamic> refreshForm);
-
-  Future<dynamic> resetPassword();
-
   /// contact
   Future<dynamic> fetchListOfUsers(String token);
 

@@ -31,6 +31,7 @@ ContactUser _$ContactUserFromJson(Map<String, dynamic> json) => ContactUser(
       organizationId: json['organizationId'] as int?,
       id: json['id'] as int?,
       isFavorite: json['isFavorite'] as bool?,
+      fullName: json['fullName'] as String?,
     )..boardMemberFunction = json['boardMemberFunction'] as String?;
 
 Map<String, dynamic> _$ContactUserToJson(ContactUser instance) =>
@@ -60,4 +61,5 @@ Map<String, dynamic> _$ContactUserToJson(ContactUser instance) =>
       'organizationId': instance.organizationId,
       'id': instance.id,
       'isFavorite': instance.isFavorite,
+      'fullName': instance.fullName,
     };

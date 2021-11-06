@@ -1,5 +1,4 @@
 import 'package:base/ui/widgets/components/logo.dart';
-import 'package:config/flavor_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:base/state/social_state.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +6,7 @@ import 'package:tweet_ui/embedded_tweet_view.dart';
 import 'package:tweet_ui/models/viewmodels/tweet_vm.dart';
 
 class SocialScreen extends StatefulWidget {
+  const SocialScreen({Key? key}) : super(key: key);
   @override
   _SocialScreenState createState() => _SocialScreenState();
 }
@@ -16,9 +16,9 @@ class _SocialScreenState extends State<SocialScreen> {
 
   @override
   void initState() {
+    super.initState();
     Provider.of<SocialState>(context, listen: false).fetchTweets(200);
     _scrollController = ScrollController();
-    super.initState();
   }
 
   Future<void> refreshData() async {
@@ -31,7 +31,7 @@ class _SocialScreenState extends State<SocialScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Logo(scale: FlavorAssets.scale),
+        title: const AppbarLogo(),
         centerTitle: true,
         backgroundColor: Colors.white,
       ),
@@ -42,7 +42,6 @@ class _SocialScreenState extends State<SocialScreen> {
           : RefreshIndicator(
               onRefresh: refreshData,
               child: Scrollbar(
-                key: UniqueKey(),
                 isAlwaysShown: true,
                 controller: _scrollController,
                 child: ListView.builder(
@@ -52,13 +51,14 @@ class _SocialScreenState extends State<SocialScreen> {
                   itemBuilder: (BuildContext context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8.0),
+                          horizontal: 8, vertical: 8.0),
                       child: EmbeddedTweetView(
-                          TweetVM.fromApiModel(
-                              socialState.tweetList[index], null),
-                          darkMode: false,
-                          useVideoPlayer: true,
-                          videoHighQuality: false),
+                        TweetVM.fromApiModel(
+                            socialState.tweetList[index], null),
+                        darkMode: false,
+                        useVideoPlayer: true,
+                        videoHighQuality: false,
+                      ),
                     );
                   },
                 ),

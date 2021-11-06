@@ -1,34 +1,37 @@
+import 'dart:convert';
+
 import 'package:base/helper/shared_preference.dart';
-import 'package:base/models/location_model.dart';
+import 'package:base/models/spotted_location.dart';
 import 'package:base/repository/controller/location_controller.dart';
+import 'package:base/state/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart';
 import 'package:location/location.dart' as _;
 
 class LocationState with ChangeNotifier {
+  LocationState(this.localStorage, this.authState);
+
   final LocalStorage localStorage;
-  LocationState(this.localStorage);
+  final AuthState authState;
+
   final LocationController _eventController = LocationController();
 
   bool get editStatus => _editStatus;
 
-  List<Location> get locationList => _locationList;
+  List<SpottedLocation> get locationList => _locationList;
 
-  Location get selectedLocation => _selectedLocation;
+  SpottedLocation get selectedLocation => _selectedLocation;
 
-  List<Location> get searchList => _searchList;
+  List<SpottedLocation> get searchList => _searchList;
 
-  List<Location> _searchList = [];
+  List<SpottedLocation> _searchList = [];
 
   bool _editStatus = false;
 
-  List<Location> _locationList = [];
+  List<SpottedLocation> _locationList = [];
 
-  late Location _selectedLocation;
-
-  bool _isLoading = true;
-
-  bool get isLoading => _isLoading;
+  late SpottedLocation _selectedLocation;
 
   late bool _serviceEnabled = false;
 
@@ -60,21 +63,29 @@ class LocationState with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<dynamic> fetchLocationData(String token) async {
+  Future<List<SpottedLocation>?> fetchLocationData() async {
     try {
-      _locationList = await _eventController.fetchLocations(token);
-      _searchList.addAll(_locationList);
+      if (await authState.refreshSession()) {
+        Response result = await _eventController
+            .fetchLocations(authState.token.accessToken!.bearerToken!);
 
-      notifyListeners();
+        if (result.statusCode == 200) {
+          List<dynamic> parsed = json.decode(result.body) as List;
+          _locationList =
+              parsed.map((val) => SpottedLocation.fromJson(val)).toList();
+        }
+        notifyListeners();
+        return _locationList;
+      }
     } on Exception catch (_) {
-      return _.toString();
+      return null;
     }
   }
 
-  Future<dynamic> fetchSelectedLocationData(Location location) async {
+  Future<dynamic> fetchSelectedLocationData(SpottedLocation location) async {
     try {
       _selectedLocation = location;
-      _isLoading = false;
+
       //    notifyListeners();
     } on Exception catch (_) {
       return _.toString();
@@ -87,11 +98,11 @@ class LocationState with ChangeNotifier {
     notifyListeners();
   }
 
-  void filterSearchResults(String query) {
-    List<Location> dummySearchList = [];
+  void filterSearchResults(String query) async {
+    List<SpottedLocation> dummySearchList = [];
     dummySearchList.addAll(_locationList);
     if (query.isNotEmpty) {
-      List<Location> dummyListData = [];
+      List<SpottedLocation> dummyListData = [];
       dummySearchList.forEach((item) {
         if (item.title != null &&
             item.title!.toLowerCase().contains(query.toLowerCase())) {
@@ -112,13 +123,13 @@ class LocationState with ChangeNotifier {
   }
 
   changeLatitudeLongitude(LatLng location) {
-    _selectedLocation.latitude = location.latitude.toString();
-    _selectedLocation.longitude = location.longitude.toString();
+    _selectedLocation.latitude = location.latitude;
+    _selectedLocation.longitude = location.longitude;
 
     notifyListeners();
   }
 
-  resetSearch() {
+  resetSearch() async {
     _searchList.clear();
     _searchList.addAll(_locationList);
     notifyListeners();

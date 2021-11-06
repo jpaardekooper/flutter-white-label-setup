@@ -38,7 +38,8 @@ class _FavoriteOverviewState extends State<FavoriteOverview>
         : RefreshIndicator(
             onRefresh: _refresh,
             child: ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               shrinkWrap: true,
               itemCount: contactState.listOfFavotire.length,
               itemBuilder: (BuildContext ctxt, int index) {

@@ -33,7 +33,8 @@ class _BoardMemberOverviewState extends State<BoardMemberOverview>
             ? NoDataMessage(message: 'Er is geen overeenkomst gevonden')
             : LoadingState(message: 'Bestuursleden')
         : ListView.builder(
-            physics: const AlwaysScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
             shrinkWrap: true,
             itemCount: contactState.listOfBoardMembers.length,
             itemBuilder: (BuildContext ctxt, int index) {

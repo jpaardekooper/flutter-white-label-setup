@@ -12,7 +12,7 @@ class BlurredBackground extends StatelessWidget {
   Widget build(BuildContext context) {
     var state = Provider.of<ContactState>(context, listen: false);
 
-    return ClipRect(
+    return ClipRRect(
       child: Stack(
         children: [
           state.selectedContactUser.profilePicture != null &&
@@ -26,6 +26,8 @@ class BlurredBackground extends StatelessWidget {
                   page: 'p')
               : Container(
                   color: Theme.of(context).colorScheme.primary,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                 ),
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),

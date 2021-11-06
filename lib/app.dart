@@ -4,7 +4,6 @@ import 'package:base/page/init_page.dart';
 import 'package:base/page/login_screen.dart';
 import 'package:base/state/auth_state.dart';
 import 'package:base/state/contact_state.dart';
-import 'package:base/state/dashboard_view_model.dart';
 import 'package:base/state/event_state.dart';
 import 'package:base/state/faq_view_model.dart';
 import 'package:base/state/location_state.dart';
@@ -30,7 +29,7 @@ class BaseApp extends StatelessWidget {
           var localStorage = Provider.of<LocalStorage>(_, listen: false);
           return AuthState(localStorage);
         }),
-        ChangeNotifierProvider(create: (_) => DashboardViewModel()),
+        // ChangeNotifierProvider(create: (_) => DashboardViewModel()),
         ChangeNotifierProvider<ContactState>(create: (_) {
           var localStorage = Provider.of<LocalStorage>(_, listen: false);
           var authState = Provider.of<AuthState>(_, listen: false);
@@ -47,7 +46,8 @@ class BaseApp extends StatelessWidget {
         }),
         ChangeNotifierProvider<LocationState>(create: (_) {
           var localStorage = Provider.of<LocalStorage>(_, listen: false);
-          return LocationState(localStorage);
+          var authState = Provider.of<AuthState>(_, listen: false);
+          return LocationState(localStorage, authState);
         }),
         ChangeNotifierProvider<FAQState>(create: (_) {
           var localStorage = Provider.of<LocalStorage>(_, listen: false);

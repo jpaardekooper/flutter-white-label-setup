@@ -1,31 +1,31 @@
-import 'package:base/repository/repository.dart';
-import 'package:base/repository/repository_interface.dart';
+import 'package:base/repository/contact_repository.dart';
+import 'package:base/repository/interface/contact_repository_interface.dart';
 
 class ContactController {
-  final IHeilooRepository _heilooRepository = HeilooRepository();
+  final IContactRepository _contactRepository = ContactRepository();
 
   Future<dynamic> fetchContactData(String token) {
-    return _heilooRepository.fetchListOfUsers(token);
+    return _contactRepository.fetchListOfUsers(token);
   }
 
   Future<dynamic> fetchFavoriteList(String token) {
-    return _heilooRepository.fetchListOfFavorites(token);
+    return _contactRepository.fetchListOfFavorites(token);
   }
 
   Future<dynamic> fetchBoardmemberList(String token) {
-    return _heilooRepository.fetchListOfBoardmembers(token);
+    return _contactRepository.fetchListOfBoardmembers(token);
   }
 
   Future<dynamic> addUserToFavorite(String token, int id) {
-    return _heilooRepository.addUserToFavorite(token, id);
+    return _contactRepository.addUserToFavorite(token, id);
   }
 
   Future<dynamic> removeUserFromFavorite(String token, int id) {
-    return _heilooRepository.removeUserFromFavorite(token, id);
+    return _contactRepository.removeUserFromFavorite(token, id);
   }
 
   Future<dynamic> getSelectedUser(String token, int id) {
-    return _heilooRepository.fetchSelectedUser(token, id);
+    return _contactRepository.fetchSelectedUser(token, id);
   }
 
   // Future<ContactModel> fetchContactDetails(String token, int id) {
@@ -34,6 +34,6 @@ class ContactController {
 
   Future<dynamic> saveContactUserData(
       Map<String, dynamic> profileForm, String token, int id) {
-    return _heilooRepository.saveContactUserData(profileForm, token, id);
+    return _contactRepository.saveContactUserData(profileForm, token, id);
   }
 }

@@ -34,7 +34,7 @@ class Header extends StatelessWidget {
   }
 
   _buildProfileImageAndTitle() {
-    return ProfileImageNameCompany(page: page);
+    //  return ProfileImageNameCompany(page: page);
   }
 
   _buildFavoriteMenu() {
@@ -42,6 +42,7 @@ class Header extends StatelessWidget {
   }
 
   _buildGradient() {
-    return BlurredBackground();
+    //  return BlurredBackground();
+    return Container();
   }
 }

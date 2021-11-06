@@ -29,6 +29,7 @@ AppUser _$AppUserFromJson(Map<String, dynamic> json) => AppUser(
       isAdmin: json['isAdmin'] as bool?,
       organizationId: json['organizationId'] as int?,
       id: json['id'] as int?,
+      fullName: json['fullName'] as String?,
     )..boardMemberFunction = json['boardMemberFunction'] as String?;
 
 Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
@@ -55,4 +56,5 @@ Map<String, dynamic> _$AppUserToJson(AppUser instance) => <String, dynamic>{
       'isAdmin': instance.isAdmin,
       'organizationId': instance.organizationId,
       'id': instance.id,
+      'fullName': instance.fullName,
     };

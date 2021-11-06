@@ -32,17 +32,18 @@ class _EventScreenState extends State<EventScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Logo(scale: FlavorAssets.scale),
+        title: AppbarLogo(),
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
       body: events.eventsList.isEmpty
-          ? LoadingState(message: 'Evenementen')
+          ? LoadingState(message: 'Evenementen worden ingeladen')
           : RefreshIndicator(
               onRefresh: _refreshData,
               child: Scrollbar(
                 child: ListView.builder(
-                  physics: const ClampingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
                   shrinkWrap: true,
                   itemCount: events.eventsList.length,
                   itemExtent: 230,

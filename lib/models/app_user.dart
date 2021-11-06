@@ -50,31 +50,33 @@ class AppUser {
   int? organizationId;
   @JsonKey(name: 'id')
   int? id;
+  @JsonKey(name: 'fullName')
+  String? fullName;
 
-  AppUser({
-    this.firstName,
-    this.insertion,
-    this.lastName,
-    this.phoneNumber,
-    this.emailAddress,
-    this.profilePicture,
-    this.profilePictureData,
-    this.companyName,
-    this.profession,
-    this.address,
-    this.zipcode,
-    this.city,
-    this.country,
-    this.description,
-    this.website,
-    this.linkedIn,
-    this.facebook,
-    this.twitter,
-    this.isBoardMember,
-    this.isAdmin,
-    this.organizationId,
-    this.id,
-  });
+  AppUser(
+      {this.firstName,
+      this.insertion,
+      this.lastName,
+      this.phoneNumber,
+      this.emailAddress,
+      this.profilePicture,
+      this.profilePictureData,
+      this.companyName,
+      this.profession,
+      this.address,
+      this.zipcode,
+      this.city,
+      this.country,
+      this.description,
+      this.website,
+      this.linkedIn,
+      this.facebook,
+      this.twitter,
+      this.isBoardMember,
+      this.isAdmin,
+      this.organizationId,
+      this.id,
+      this.fullName});
 
   factory AppUser.fromJson(Map<String, dynamic> json) =>
       _$AppUserFromJson(json);

@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:base/models/custom_exception.dart';
-import 'package:base/models/location_model.dart';
+import 'package:base/models/spotted_location.dart';
 import 'package:base/models/error.dart';
+import 'package:base/repository/old_repo/repository_interface.dart';
 import 'package:http/http.dart';
-import 'package:base/repository/repository_interface.dart';
 import 'package:tweet_ui/models/api/tweet.dart';
 import 'package:dart_twitter_api/twitter_api.dart' as tw;
 import 'dart:math';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 extension ParameterExtension on Map<String, String> {
   /// Adds an entry to the map.
@@ -26,6 +26,11 @@ extension ParameterExtension on Map<String, String> {
 }
 
 class HeilooRepository implements IHeilooRepository {
+  final String baseUrl = dotenv.env['BASE_API'].toString();
+  final String header_x_portal = dotenv.env['HEADER_X_PORTAL_NAME'].toString();
+  final String header_x_request =
+      dotenv.env['HEADER_X_REQUESTED_WITH'].toString();
+
   // final FlavorConfig config = FlavorConfig();
   dynamic getResponse(Response response) {
     switch (response.statusCode) {
@@ -48,85 +53,15 @@ class HeilooRepository implements IHeilooRepository {
   }
 
   @override
-  Future<dynamic> login(Map<String, dynamic> loginForm) async {
-    Response response;
-    print(FlutterConfig.get('API_BASE_URL_TEST'));
-    try {
-      response = await post(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') + "/accounts/login"),
-        body: jsonEncode(loginForm),
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
-        },
-      );
-
-      response = getResponse(response);
-    } on SocketException catch (_) {
-      throw FetchDataException('no internet connection');
-    }
-
-    return response;
-  }
-
-  @override
-  Future<dynamic> refreshSession(Map<String, dynamic> refreshForm) async {
-    Response response;
-
-    try {
-      response = await post(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') +
-            "/accounts/refresh-session"),
-        body: jsonEncode(refreshForm),
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
-        },
-      );
-
-      response = getResponse(response);
-    } on SocketException catch (_) {
-      throw FetchDataException('no internet connection');
-    }
-
-    return response;
-  }
-
-  @override
-  Future<dynamic> checkAndSetSession(String token) async {
-    Response response;
-    try {
-      response = await get(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') + "/accounts/me"),
-        // body: jsonEncode(loginForm),
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
-          'Authorization': 'Bearer $token'
-        },
-      );
-
-      response = getResponse(response);
-    } on SocketException catch (_) {
-      throw FetchDataException('no internet connection');
-    }
-
-    return response;
-  }
-
-  @override
   Future<dynamic> fetchListOfUsers(String token) async {
     Response response;
     try {
       response = await get(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') + "/users"),
+        Uri.parse(baseUrl + "/users"),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -143,11 +78,11 @@ class HeilooRepository implements IHeilooRepository {
     Response response;
     try {
       response = await get(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') + "/users/favorites"),
+        Uri.parse(baseUrl + "/users/favorites"),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -164,12 +99,11 @@ class HeilooRepository implements IHeilooRepository {
     Response response;
     try {
       response = await get(
-        Uri.parse(
-            FlutterConfig.get('API_BASE_URL_TEST') + "/users/boardmembers"),
+        Uri.parse(baseUrl + "/users/boardmembers"),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -186,12 +120,11 @@ class HeilooRepository implements IHeilooRepository {
     Response response;
     try {
       response = await post(
-        Uri.parse(
-            FlutterConfig.get('API_BASE_URL_TEST') + "/users/favorite/$id"),
+        Uri.parse(baseUrl + "/users/favorite/$id"),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -208,12 +141,11 @@ class HeilooRepository implements IHeilooRepository {
     Response response;
     try {
       response = await delete(
-        Uri.parse(
-            FlutterConfig.get('API_BASE_URL_TEST') + "/users/favorite/$id"),
+        Uri.parse(baseUrl + "/users/favorite/$id"),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -230,11 +162,11 @@ class HeilooRepository implements IHeilooRepository {
     Response response;
     try {
       response = await get(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') + "/users/$id"),
+        Uri.parse(baseUrl + "/users/$id"),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -251,12 +183,12 @@ class HeilooRepository implements IHeilooRepository {
     Response response;
     try {
       response = await put(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') + "/users/$id"),
+        Uri.parse(baseUrl + "/users/$id"),
         body: jsonEncode(profileForm),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -273,12 +205,11 @@ class HeilooRepository implements IHeilooRepository {
     Response response;
     try {
       response = await get(
-        Uri.parse(
-            FlutterConfig.get('API_BASE_URL_TEST') + "/events?active=$active"),
+        Uri.parse(baseUrl + "/events?active=$active"),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -295,11 +226,11 @@ class HeilooRepository implements IHeilooRepository {
     Response response;
     try {
       response = await get(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') + "/events/$id"),
+        Uri.parse(baseUrl + "/events/$id"),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -320,12 +251,12 @@ class HeilooRepository implements IHeilooRepository {
 
     try {
       response = await put(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') + "/events/$eventId"),
+        Uri.parse(baseUrl + "/events/$eventId"),
         body: jsonEncode(eventForm),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -344,13 +275,12 @@ class HeilooRepository implements IHeilooRepository {
 
     try {
       response = await put(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') +
-            "/events/$eventId/users/$userId"),
+        Uri.parse(baseUrl + "/events/$eventId/users/$userId"),
         body: jsonEncode(eventForm),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -364,41 +294,22 @@ class HeilooRepository implements IHeilooRepository {
 
   @override
   Future<dynamic> getLocations(String token) async {
+    Response response;
     try {
-      var result;
-
-      Response response = await get(
-        Uri.parse(FlutterConfig.get('API_BASE_URL') + "/location"),
+      response = await get(
+        Uri.parse(baseUrl + "/locations"),
         headers: {
-          //  'x-organization-code':
-          'x-portal-name': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
 
-      if (response.statusCode == 200) {
-        // List<dynamic> parsed = json.decode(response.body);
-        // result = parsed.map((val) => EventModel.fromJson(val)).toList();
-      }
-      Random random = Random();
-      List<Location> test = [];
-      for (int i = 0; i < 10; i++) {
-        test.add(Location(
-          'latitude $i ',
-          'longitude $i',
-          'title ${random.nextInt(100)}',
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam facilisis cursus ipsum eget elementum. Duis felis augue, eleifend vitae velit quis, bibendum convallis quam. Nunc ac blandit felis. Vivamus vitae sodales enim. Aliquam rutrum efficitur lorem, non \n \n Fusce maximus pulvinar massa quis consectetur. Cras sodales facilisis ipsum, sit amet pretium dolor molestie facilisis. Nam commodo pharetra elementum. Aliquam vitae enim ullamcorper nisl efficitur commodo. Curabitur at facilisis tortor, ac luctus ipsum. Mauris consectetur tortor sit amet ex eleifend, eget sodales arcu sodales. Cras vehicula nisi vel odio mattis, eu fringilla metus porta.',
-          'zipcode $i',
-          'address $i',
-          'city $i',
-          'url $i',
-        ));
-      }
-      return test;
-    } on Exception catch (_) {
-      throw _;
+      response = getResponse(response);
+    } on SocketException catch (_) {
+      throw FetchDataException('no internet connection');
     }
+    return response;
   }
 
   @override
@@ -407,10 +318,10 @@ class HeilooRepository implements IHeilooRepository {
       //   var result;
 
       Response response = await get(
-        Uri.parse(FlutterConfig.get('API_BASE_URL') + "/location/$id"),
+        Uri.parse(baseUrl + "/location/$id"),
         headers: {
-          'x-portal-name': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -420,16 +331,8 @@ class HeilooRepository implements IHeilooRepository {
         // result = parsed.map((val) => EventModel.fromJson(val)).toList();
       }
 
-      return Location(
-        'latitude',
-        'longitude',
-        'title',
-        'description',
-        'zipcode',
-        'address',
-        'city',
-        'url',
-      );
+      return SpottedLocation('Test', null, null, null, null, null, null, null,
+          null, null, null, null, null, null);
     } on Exception catch (_) {
       throw _;
     }
@@ -440,11 +343,11 @@ class HeilooRepository implements IHeilooRepository {
     Response response;
     try {
       response = await get(
-        Uri.parse(FlutterConfig.get('API_BASE_URL_TEST') + "/faq-items"),
+        Uri.parse(baseUrl + "/faq-items"),
         headers: {
           'Content-Type': 'application/json',
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME'),
-          'x-required-with': FlutterConfig.get('HEADER_X_REQUESTED_WITH'),
+          'X-Organization-Code': header_x_portal,
+          'x-required-with': header_x_request,
           'Authorization': 'Bearer $token'
         },
       );
@@ -462,16 +365,17 @@ class HeilooRepository implements IHeilooRepository {
 
       var twitterApi = tw.TwitterApi(
         client: tw.TwitterClient(
-          consumerKey: FlutterConfig.get('CONSUMER_KEY'),
-          consumerSecret: FlutterConfig.get('CONSUMER_SECRET'),
-          token: FlutterConfig.get('TOKEN'),
-          secret: FlutterConfig.get('SECRET'),
+          consumerKey: dotenv.env['CONSUMER_KEY'].toString(),
+          consumerSecret: dotenv.env['CONSUMER_SECRET'].toString(),
+          token: dotenv.env['TOKEN'].toString(),
+          secret: dotenv.env['SECRET'].toString(),
         ),
       );
 
       var params = <String, String>{}
-        ..addParameter('user_id', FlutterConfig.get('ORGANISATION_TWITTER'))
-        ..addParameter('screen_name', FlutterConfig.get('ORGANISATION_TWITTER'))
+        ..addParameter('user_id', dotenv.env['ORGANISATION_TWITTER'].toString())
+        ..addParameter(
+            'screen_name', dotenv.env['ORGANISATION_TWITTER'].toString())
         ..addParameter('count', count);
 
       Response test = await twitterApi.client.get(Uri.https(
@@ -488,28 +392,6 @@ class HeilooRepository implements IHeilooRepository {
       return tweett;
     } catch (error) {
       print('error while requesting home timeline: $error');
-    }
-  }
-
-  Future<dynamic> resetPassword() async {
-    try {
-      bool result = false;
-
-      Response response = await get(
-        Uri.parse(
-            "https://contactapp-api-test.azurewebsites.net/accounts/request-password-reset"),
-        headers: {
-          'X-Organization-Code': FlutterConfig.get('HEADER_X_PORTAL_NAME')
-        },
-      );
-
-      if (response.statusCode == 200) {
-        result = true;
-      }
-
-      return result;
-    } on Exception catch (_) {
-      throw _;
     }
   }
 }

@@ -13,6 +13,7 @@ class ContactFormTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return text.isNotEmpty
         ? ListTile(
+            dense: true,
             leading: leading ?? SizedBox(),
             title: BodyText1(
               text: text,

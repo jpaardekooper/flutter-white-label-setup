@@ -42,7 +42,8 @@ class _ContactOverviewState extends State<ContactOverview>
             child: RefreshIndicator(
               onRefresh: _refreshData,
               child: ListView.builder(
-                physics: const ClampingScrollPhysics(),
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 shrinkWrap: true,
                 itemCount: contactViewModel.listOfContacts.length,
                 itemExtent: 70,

@@ -14,7 +14,7 @@ class LoadingState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(message + ' worden ingeladen'),
+          Text(message),
           SizedBox(
             height: 20,
           ),

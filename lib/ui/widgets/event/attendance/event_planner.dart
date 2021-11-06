@@ -1,4 +1,5 @@
 import 'package:base/state/event_state.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,8 @@ class EventPlanner extends StatefulWidget {
 }
 
 class _EventPlannerState extends State<EventPlanner> {
+  int? groupValue = 0;
+
   Container attendance(String text) {
     return Container(
       decoration: BoxDecoration(
@@ -25,76 +28,108 @@ class _EventPlannerState extends State<EventPlanner> {
     );
   }
 
+  Widget buildSegment(String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+      child: Text(
+        text,
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var eventState = Provider.of<EventState>(context, listen: true);
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Row(
-          children: [
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    if (eventState.selectedUserForEvent?.isGoing == 0) {
-                      return;
-                    } else {
-                      Provider.of<EventState>(context, listen: false)
-                          .attendEvent(0);
-                    }
-                  });
-                },
-                child: Ink(
-                  color: eventState.selectedUserForEvent?.isGoing == 0
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.secondary,
-                  child: attendance('Aanwezig'),
-                ),
-              ),
-            ),
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    if (eventState.selectedUserForEvent?.isGoing == 1) {
-                      return;
-                    } else {
-                      Provider.of<EventState>(context, listen: false)
-                          .attendEvent(1);
-                    }
-                  });
-                },
-                child: Ink(
-                  color: eventState.selectedUserForEvent?.isGoing == 1
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.secondary,
-                  child: attendance('Misschien'),
-                ),
-              ),
-            ),
-            Expanded(
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    if (eventState.selectedUserForEvent?.isGoing == 2) {
-                      return;
-                    } else {
-                      Provider.of<EventState>(context, listen: false)
-                          .attendEvent(2);
-                    }
-                  });
-                },
-                child: Ink(
-                  color: eventState.selectedUserForEvent?.isGoing == 2
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.secondary,
-                  child: attendance('Niet aanwezig'),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+    return Container(
+      alignment: Alignment.center,
+
+      child: CupertinoSlidingSegmentedControl<int>(
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        thumbColor: Theme.of(context).colorScheme.primary,
+        groupValue: Provider.of<EventState>(context, listen: false)
+            .selectedUserForEvent
+            ?.isGoing,
+        children: {
+          0: buildSegment("Aanwezig"),
+          1: buildSegment("Misschien"),
+          2: buildSegment("Niet aanwezig"),
+        },
+        onValueChanged: (value) {
+          setState(() {
+            groupValue = value;
+            Provider.of<EventState>(context, listen: false)
+                .attendEvent(groupValue!);
+          });
+        },
+      ),
+      // return LayoutBuilder(
+      //   builder: (context, constraints) {
+      //     return Row(
+      //       children: [
+      //         Expanded(
+      //           child: InkWell(
+      //             onTap: () {
+      //               setState(() {
+      //                 if (eventState.selectedUserForEvent?.isGoing == 0) {
+      //                   return;
+      //                 } else {
+      //                   Provider.of<EventState>(context, listen: false)
+      //                       .attendEvent(0);
+      //                 }
+      //               });
+      //             },
+      //             child: Ink(
+      //               color: eventState.selectedUserForEvent?.isGoing == 0
+      //                   ? Theme.of(context).colorScheme.primary
+      //                   : Theme.of(context).colorScheme.secondary,
+      //               child: attendance('Aanwezig'),
+      //             ),
+      //           ),
+      //         ),
+      //         Expanded(
+      //           child: InkWell(
+      //             onTap: () {
+      //               setState(() {
+      //                 if (eventState.selectedUserForEvent?.isGoing == 1) {
+      //                   return;
+      //                 } else {
+      //                   Provider.of<EventState>(context, listen: false)
+      //                       .attendEvent(1);
+      //                 }
+      //               });
+      //             },
+      //             child: Ink(
+      //               color: eventState.selectedUserForEvent?.isGoing == 1
+      //                   ? Theme.of(context).colorScheme.primary
+      //                   : Theme.of(context).colorScheme.secondary,
+      //               child: attendance('Misschien'),
+      //             ),
+      //           ),
+      //         ),
+      //         Expanded(
+      //           child: InkWell(
+      //             onTap: () {
+      //               setState(() {
+      //                 if (eventState.selectedUserForEvent?.isGoing == 2) {
+      //                   return;
+      //                 } else {
+      //                   Provider.of<EventState>(context, listen: false)
+      //                       .attendEvent(2);
+      //                 }
+      //               });
+      //             },
+      //             child: Ink(
+      //               color: eventState.selectedUserForEvent?.isGoing == 2
+      //                   ? Theme.of(context).colorScheme.primary
+      //                   : Theme.of(context).colorScheme.secondary,
+      //               child: attendance('Niet aanwezig'),
+      //             ),
+      //           ),
+      //         ),
+      //       ],
+      //     );
+      //   },
     );
   }
 }

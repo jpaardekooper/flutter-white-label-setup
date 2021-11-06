@@ -48,126 +48,127 @@ class ContactForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ContactState>(context, listen: true);
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SubtitleText1(subtitle: 'Gebruikersinformatie'),
-        ),
-        ContactFormTile(
-          leading: FaIcon(
-            FontAwesomeIcons.prescription,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 16,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(left: 16.0),
+            child: SubtitleText1(subtitle: 'Gebruikersinformatie'),
           ),
-          text: provider.selectedContactUser.firstName ?? '',
-        ),
-        ContactFormTile(
-          leading: FaIcon(
-            FontAwesomeIcons.user,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 16,
+          ContactFormTile(
+            leading: FaIcon(
+              FontAwesomeIcons.prescription,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 16,
+            ),
+            text: provider.selectedContactUser.firstName ?? '',
           ),
-          text: provider.selectedContactUser.insertion ?? '',
-        ),
-        ////////////////////
-
-        ContactFormTile(
-          leading: FaIcon(
-            FontAwesomeIcons.user,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 16,
+          ContactFormTile(
+            leading: FaIcon(
+              FontAwesomeIcons.user,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 16,
+            ),
+            text: provider.selectedContactUser.insertion ?? '',
           ),
-          text: provider.selectedContactUser.lastName ?? '',
-        ),
-        ContactFormTile(
-          leading: FaIcon(
-            FontAwesomeIcons.user,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 16,
+          ////////////////////
+
+          ContactFormTile(
+            leading: FaIcon(
+              FontAwesomeIcons.user,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 16,
+            ),
+            text: provider.selectedContactUser.lastName ?? '',
           ),
-          text: provider.selectedContactUser.boardMemberFunction ?? '',
-        ),
-
-        ContactFormTile(
-          leading: FaIcon(
-            FontAwesomeIcons.phone,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 16,
+          ContactFormTile(
+            leading: FaIcon(
+              FontAwesomeIcons.user,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 16,
+            ),
+            text: provider.selectedContactUser.boardMemberFunction ?? '',
           ),
-          trailing: IconButton(
-            onPressed: () {
-              launchUrl("tel:" + provider.selectedContactUser.phoneNumber!);
-            },
-            icon: Icon(Icons.phone_android_rounded),
+
+          ContactFormTile(
+            leading: FaIcon(
+              FontAwesomeIcons.phone,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 16,
+            ),
+            trailing: IconButton(
+              onPressed: () {
+                launchUrl("tel:" + provider.selectedContactUser.phoneNumber!);
+              },
+              icon: Icon(Icons.phone_android_rounded),
+            ),
+            text: provider.selectedContactUser.phoneNumber ?? '',
           ),
-          text: provider.selectedContactUser.phoneNumber ?? '',
-        ),
 
-        dividerToggle(context),
+          dividerToggle(context),
 
-        ContactFormTile(
-          leading: Icon(
-            Icons.web,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 16,
+          ContactFormTile(
+            leading: Icon(
+              Icons.web,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 16,
+            ),
+            text: provider.selectedContactUser.description ?? '',
           ),
-          text: provider.selectedContactUser.description ?? '',
-        ),
 
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SubtitleText1(subtitle: 'Bedrijfsgegevens'),
-        ),
-
-        ContactFormTile(
-          leading: Icon(
-            Icons.mail,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 16,
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: SubtitleText1(subtitle: 'Bedrijfsgegevens'),
           ),
-          text: provider.selectedContactUser.description ?? '',
-        ),
 
-        ContactFormTile(
-          text: provider.selectedContactUser.companyName ?? '',
-        ),
-        ContactFormTile(
-          text: provider.selectedContactUser.address ?? '',
-        ),
-        ContactFormTile(
-          text: provider.selectedContactUser.zipcode ?? '',
-        ),
-
-        ContactFormTile(
-          text: provider.selectedContactUser.city ?? '',
-        ),
-
-        dividerToggle(context),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SubtitleText1(subtitle: 'Social Media'),
-        ),
-
-        ContactFormTile(
-          leading: Icon(
-            Icons.web,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 16,
+          ContactFormTile(
+            leading: Icon(
+              Icons.mail,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 16,
+            ),
+            text: provider.selectedContactUser.description ?? '',
           ),
-          trailing: IconButton(
-            icon: Icon(Icons.open_in_browser),
-            onPressed: () {
-              launchUrl(provider.selectedContactUser.website);
-            },
-          ),
-          text: provider.selectedContactUser.website ?? '',
-        ),
 
-        dividerToggle(context),
-      ],
+          ContactFormTile(
+            text: provider.selectedContactUser.companyName ?? '',
+          ),
+          ContactFormTile(
+            text: provider.selectedContactUser.address ?? '',
+          ),
+          ContactFormTile(
+            text: provider.selectedContactUser.zipcode ?? '',
+          ),
+
+          ContactFormTile(
+            text: provider.selectedContactUser.city ?? '',
+          ),
+
+          dividerToggle(context),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: SubtitleText1(subtitle: 'Social Media'),
+          ),
+
+          ContactFormTile(
+            leading: Icon(
+              Icons.web,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 16,
+            ),
+            trailing: IconButton(
+              icon: Icon(Icons.open_in_browser),
+              onPressed: () {
+                launchUrl(provider.selectedContactUser.website);
+              },
+            ),
+            text: provider.selectedContactUser.website ?? '',
+          ),
+        ],
+      ),
     );
   }
 }

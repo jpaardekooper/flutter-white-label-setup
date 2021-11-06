@@ -1,14 +1,15 @@
-import 'package:base/repository/repository.dart';
-import 'package:base/repository/repository_interface.dart';
+import 'package:base/repository/interface/spotted_location_repository_interface.dart';
+import 'package:base/repository/spotted_location_repository.dart';
 
 class LocationController {
-  final IHeilooRepository _heilooRepository = HeilooRepository();
+  final ISpottedLocationRepository _locationRepository =
+      SpottedLocationRepository();
 
   Future<dynamic> fetchLocations(String token) {
-    return _heilooRepository.getLocations(token);
+    return _locationRepository.getLocations(token);
   }
 
   Future<dynamic> fetchLocationDetails(String token, int id) {
-    return _heilooRepository.getLocationDetails(token, id);
+    return _locationRepository.getLocationDetails(token, id);
   }
 }

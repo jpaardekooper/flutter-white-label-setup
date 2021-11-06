@@ -36,6 +36,9 @@ class EventState with ChangeNotifier {
 
   toggleEditToFalse() {
     _edit = false;
+    going.clear();
+    notGoing.clear();
+    maybeGoing.clear();
 
     notifyListeners();
   }
@@ -76,7 +79,7 @@ class EventState with ChangeNotifier {
         userName: authState.fullName(authState.appUser.firstName,
             authState.appUser.insertion, authState.appUser.lastName),
         userImage: authState.appUser.profilePicture,
-        isGoing: -1,
+        isGoing: null,
         takesGuest: false);
 
     try {

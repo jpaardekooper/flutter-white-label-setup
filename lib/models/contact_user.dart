@@ -35,6 +35,7 @@ class ContactUser with ChangeNotifier {
   int? organizationId;
   int? id;
   bool? isFavorite;
+  String? fullName;
 
   ContactUser({
     this.firstName,
@@ -61,6 +62,7 @@ class ContactUser with ChangeNotifier {
     this.organizationId,
     this.id,
     this.isFavorite,
+    this.fullName,
   });
 
   updateFirstname(String value) {

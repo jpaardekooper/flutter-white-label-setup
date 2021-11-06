@@ -67,21 +67,35 @@ class EventTiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
-      semanticContainer: true,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      elevation: 5,
-      child: Ink.image(
-        fit: BoxFit.cover,
-        image: NetworkImage(event.visualImage == null ||
-                event.visualImage!.isEmpty ||
-                !event.visualImage!.contains('www')
-            ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWJaETQSzqCVFZDUS_WHTH_Z7O6cscWRvB-c-eBRTW8ahEIAHd&s'
-            : event.visualImage!),
-        child: eventTile(context),
-      ),
-    );
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        semanticContainer: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: 5,
+        child: Stack(
+          children: [
+            FadeInImage.assetNetwork(
+              placeholder: 'config/assets/images/logo.png',
+              image:
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWJaETQSzqCVFZDUS_WHTH_Z7O6cscWRvB-c-eBRTW8ahEIAHd&s',
+              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+            ),
+            eventTile(context)
+          ],
+        )
+
+        //  Ink.image(
+        //   fit: BoxFit.cover,
+        //   image: NetworkImage(event.visualImage == null ||
+        //           event.visualImage!.isEmpty ||
+        //           !event.visualImage!.contains('www')
+        //       ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWJaETQSzqCVFZDUS_WHTH_Z7O6cscWRvB-c-eBRTW8ahEIAHd&s'
+        //       : event.visualImage!),
+        //   child: ,
+        // ),
+        );
   }
 }

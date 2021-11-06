@@ -15,6 +15,7 @@ class AppBackButton extends StatelessWidget {
             onPressed: () {
               function();
               Navigator.pop(context);
-            });
+            },
+          );
   }
 }

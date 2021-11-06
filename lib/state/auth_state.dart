@@ -4,7 +4,7 @@ import 'package:base/helper/shared_preference.dart';
 import 'package:base/models/app_user.dart';
 import 'package:base/models/error.dart';
 import 'package:base/models/token.dart';
-import 'package:base/repository/controller/auth_controller.dart';
+import 'package:base/repository/controller/login_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -16,7 +16,7 @@ enum AppState {
 }
 
 class AuthState with ChangeNotifier {
-  final AuthController _authController = AuthController();
+  final LoginController _authController = LoginController();
 
   AppState get appState => _appState;
 
@@ -61,7 +61,6 @@ class AuthState with ChangeNotifier {
         //hier moet refresh token worden aangevraagd
         Map<String, dynamic> loginForm = {
           'refreshToken': _token.refreshToken!.bearerToken,
-          //  'emailAddress': _email
         };
         Response response = await _authController.refreshSession(loginForm);
 
@@ -139,16 +138,17 @@ class AuthState with ChangeNotifier {
         await localStorage.saveSession(_token);
         await localStorage.saveEmail(username);
         _appState = AppState.authenticating;
-        loading = false;
-        notifyListeners();
       }
+
       return response.statusCode;
     } on Exception catch (_) {
-      loading = false;
-      notifyListeners();
-
       return _.toString();
     }
+  }
+
+  void setLoadingToFalse() {
+    loading = false;
+    notifyListeners();
   }
 
   logout() {

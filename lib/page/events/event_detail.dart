@@ -1,9 +1,10 @@
 import 'package:base/state/event_state.dart';
 import 'package:base/ui/widgets/components/buttons/event_back_button.dart';
-import 'package:base/ui/widgets/components/buttons/toggle_edit.dart';
+import 'package:base/ui/widgets/event/buttons/toggle_edit.dart';
 import 'package:base/ui/widgets/components/logo.dart';
 import 'package:base/ui/widgets/event/event_header.dart';
 import 'package:config/flavor_assets.dart';
+import 'package:dart_twitter_api/api/media/data/media.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,7 @@ class _EventDetailState extends State<EventDetail> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Logo(scale: FlavorAssets.scale),
+          title: AppbarLogo(),
           backgroundColor: Colors.white,
           centerTitle: true,
           leading: AppBackButton(function: eventState.toggleEditToFalse),
