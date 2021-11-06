@@ -2,8 +2,8 @@ import 'package:base/ui/widgets/components/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:base/state/social_state.dart';
 import 'package:provider/provider.dart';
-import 'package:tweet_ui/embedded_tweet_view.dart';
-import 'package:tweet_ui/models/viewmodels/tweet_vm.dart';
+// import 'package:tweet_ui/embedded_tweet_view.dart';
+// import 'package:tweet_ui/models/viewmodels/tweet_vm.dart';
 
 class SocialScreen extends StatefulWidget {
   const SocialScreen({Key? key}) : super(key: key);
@@ -49,17 +49,18 @@ class _SocialScreenState extends State<SocialScreen> {
                   controller: _scrollController,
                   itemCount: socialState.tweetList.length,
                   itemBuilder: (BuildContext context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8.0),
-                      child: EmbeddedTweetView(
-                        TweetVM.fromApiModel(
-                            socialState.tweetList[index], null),
-                        darkMode: false,
-                        useVideoPlayer: true,
-                        videoHighQuality: false,
-                      ),
-                    );
+                    // return Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       horizontal: 8, vertical: 8.0),
+                    //   child: EmbeddedTweetView(
+                    //     TweetVM.fromApiModel(
+                    //         socialState.tweetList[index], null),
+                    //     darkMode: false,
+                    //     useVideoPlayer: true,
+                    //     videoHighQuality: false,
+                    //   ),
+                    // );
+                    return Container();
                   },
                 ),
               ),
