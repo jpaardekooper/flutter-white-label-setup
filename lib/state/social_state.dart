@@ -1,7 +1,7 @@
 import 'package:base/helper/shared_preference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:base/repository/controller/social_controller.dart';
-import 'package:tweet_ui/models/api/tweet.dart';
+//import 'package:tweet_ui/models/api/tweet.dart';
 
 class SocialState with ChangeNotifier {
   final LocalStorage localStorage;
@@ -11,7 +11,8 @@ class SocialState with ChangeNotifier {
 
   List<dynamic> get tweetList => _tweetList;
 
-  List<Tweet> _tweetList = [];
+  //List<Tweet> _tweetList = [];
+  List<dynamic> _tweetList = [];
 
   Future<dynamic> fetchTweets(int count) async {
     try {
