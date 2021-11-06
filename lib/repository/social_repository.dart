@@ -4,7 +4,7 @@ import 'package:base/models/error.dart';
 import 'package:base/repository/interface/social_repository_interface.dart';
 import 'package:http/http.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-//import 'package:tweet_ui/models/api/tweet.dart';
+import 'package:tweet_ui/models/api/tweet.dart';
 import 'package:dart_twitter_api/twitter_api.dart' as tw;
 
 extension ParameterExtension on Map<String, String> {
@@ -75,7 +75,7 @@ class SocialRepository implements ISocialRepository {
 
       if (test.statusCode == 200) {
         List<dynamic> parsed = json.decode(test.body);
-        //   tweett = parsed.map((val) => Tweet.fromJson(val)).toList();
+        tweett = parsed.map((val) => Tweet.fromJson(val)).toList();
       }
 
       return tweett;
