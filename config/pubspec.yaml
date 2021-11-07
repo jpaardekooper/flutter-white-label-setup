@@ -12,5 +12,5 @@ dependencies:
     sdk: flutter
 
   base:
-    path: ../../base
+    path: ../base
 
