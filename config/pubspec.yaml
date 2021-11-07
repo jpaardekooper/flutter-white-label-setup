@@ -11,6 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+dependency_overrides: 
+  better_player: '0.0.75'
+
   base:
     path: ../base
 

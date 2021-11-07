@@ -20,10 +20,10 @@ flutter_native_splash:
   #image_dark: config/assets/images/company.png
   fullscreen: true
 
-dependency_overrides:
+dependency_overrides: 
   config:
     path: config
-  better_player: ^0.0.79
+  better_player: '0.0.75'
 
 dev_dependencies:
   flutter_test:
