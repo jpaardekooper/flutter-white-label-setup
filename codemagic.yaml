@@ -46,6 +46,7 @@ workflows:
       - build/**/outputs/bundle/**/*.aab
       - build/**/outputs/**/mapping.txt
       - build/ios/ipa/*.ipa
+      - build/ios/iphoneos/Runner.app
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
