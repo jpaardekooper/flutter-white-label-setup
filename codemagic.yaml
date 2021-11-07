@@ -37,7 +37,7 @@ workflows:
         echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
       - flutter packages pub get
       - flutter pub run environment_config:generate --BASE_API=https://contactapp-api-test.azurewebsites.net --GOOGLE_MAPS_API_KEY=AIzaSyB1RbhCEr5FYyeUnyFtvl9neDK1Tx5RfHg --HEADER_X_PORTAL_NAME=OHO --HEADER_X_REQUESTED_WITH=nl.s5.contactsapp --ORGANISATION_TWITTER=ohoheiloo  --CONSUMER_KEY=MYaklcNkTji8bAElslgMduVDf --CONSUMER_SECRET=XZkyaxJX1dJ551nvYgCKSiHJio0qqBXsm7k9sGiawW8SsWoYjZ --TOKEN=1442400547886174209-wd9L8aqgjXRkKtt8giTDLqnLf3V9Av --SECRET=1vSZgcnIMro0rlXDF5ZUDvTbr2rg9T3o0aZmTPcDfIDok
-      #- flutter build appbundle --debug
+      - flutter build appbundle --debug
       - find . -name "Podfile" -execdir pod install \;
       - flutter build ios --debug --no-codesign
    #   - flutter build ios --release --no-codesign
