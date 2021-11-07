@@ -23,7 +23,7 @@ flutter_native_splash:
 dependency_overrides:
   config:
     path: config
-  better_player: '0.0.75'
+  better_player: ^0.0.79
 
 dev_dependencies:
   flutter_test:
