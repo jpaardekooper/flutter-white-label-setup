@@ -23,15 +23,16 @@ flutter_native_splash:
 dependency_overrides:
   config:
     path: config
-  flutter_config: ^2.0.0  # .env for native code
-  environment_config: ^3.0.0 # 
-  flutter_dotenv: ^5.0.2
+  better_player: '0.0.75'
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.9.2
   flutter_lints: ^1.0.0
+  flutter_config: ^2.0.0  # .env for native code
+  environment_config: ^3.0.0 # 
+  flutter_dotenv: ^5.0.2
 
 
 environment_config:

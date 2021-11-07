@@ -44,12 +44,12 @@ packages:
     source: path
     version: "1.0.0+1"
   better_player:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: better_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.76"
+    version: "0.0.75"
   boolean_selector:
     dependency: transitive
     description:
@@ -212,7 +212,7 @@ packages:
     source: hosted
     version: "0.5.3"
   environment_config:
-    dependency: "direct overridden"
+    dependency: "direct dev"
     description:
       name: environment_config
       url: "https://pub.dartlang.org"
@@ -266,7 +266,7 @@ packages:
     source: hosted
     version: "3.1.2"
   flutter_config:
-    dependency: "direct overridden"
+    dependency: "direct dev"
     description:
       name: flutter_config
       url: "https://pub.dartlang.org"
@@ -280,7 +280,7 @@ packages:
     source: hosted
     version: "1.5.1"
   flutter_dotenv:
-    dependency: "direct overridden"
+    dependency: "direct dev"
     description:
       name: flutter_dotenv
       url: "https://pub.dartlang.org"
