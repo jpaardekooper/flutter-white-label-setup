@@ -19,8 +19,7 @@ workflows:
       tag_patterns:
         - pattern: '*'
           include: true
-    scripts:
-      - cd oho_heiloo
+    scripts:  
       - |
         # set up debug keystore
         rm -f ~/.android/debug.keystore
