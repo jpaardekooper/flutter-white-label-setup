@@ -10,7 +10,3 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  base:
-    path: ../../base
-
