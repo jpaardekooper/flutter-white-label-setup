@@ -33,8 +33,10 @@
 		<string>Main</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Used to select an image from galerij</string>
+		<key>NSLocationAlwaysUsageDescription </key>
+		<string>Location</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>location</string>
+		<string>permission for location</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>
