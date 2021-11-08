@@ -35,6 +35,8 @@
 		<string>Used to select an image from galerij</string>
 		<key>NSLocationAlwaysUsageDescription </key>
 		<string>Location</string>
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<false/>
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>permission for location</string>
 		<key>UISupportedInterfaceOrientations</key>
