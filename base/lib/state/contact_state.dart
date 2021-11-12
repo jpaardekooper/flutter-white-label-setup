@@ -35,9 +35,6 @@ class ContactState with ChangeNotifier {
   bool _searchToggle = false;
   bool get searchToggle => _searchToggle;
 
-  bool _editProfileToggle = false;
-  bool get editProfileToggle => _editProfileToggle;
-
   int _tabIndex = 0;
   int get tabIndex => _tabIndex;
 
@@ -113,16 +110,7 @@ class ContactState with ChangeNotifier {
     } on Exception catch (_) {}
   }
 
-  toggleEditProfile() {
-    _editProfileToggle = !editProfileToggle;
-    notifyListeners();
-  }
-
-  setEditProfileToFalse() {
-    _editProfileToggle = false;
-
-    notifyListeners();
-
+  fetchDataContactData() {
     fetchContactData();
     fetchFavoriteData();
     fetchBoardmemberData();

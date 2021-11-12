@@ -46,6 +46,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-*.env
-.vscode/
 .env
+.vscode/
+../ignore/

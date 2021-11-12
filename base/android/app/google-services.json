@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "537212407978",
+    "project_id": "contacten-app-fb653",
+    "storage_bucket": "contacten-app-fb653.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537212407978:android:d9b1f15fd921f6736e40d3",
+        "android_client_info": {
+          "package_name": "Kaleo.Chat.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537212407978-68g9hrq0pkoldh36pinca9l2ceve7krl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEcKgsFcOFbPcJgPEJSYi-RjH9hqzL9kI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537212407978-68g9hrq0pkoldh36pinca9l2ceve7krl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "537212407978-0bmkblgq32iiltok37hu3qptmfjor9ko.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.oho.testingdeployment"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537212407978:android:e1bb58f50d4d95c76e40d3",
+        "android_client_info": {
+          "package_name": "com.contactenapp.oho2021"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537212407978-68g9hrq0pkoldh36pinca9l2ceve7krl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEcKgsFcOFbPcJgPEJSYi-RjH9hqzL9kI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537212407978-68g9hrq0pkoldh36pinca9l2ceve7krl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "537212407978-0bmkblgq32iiltok37hu3qptmfjor9ko.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.oho.testingdeployment"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537212407978:android:6bdc69736a78cf276e40d3",
+        "android_client_info": {
+          "package_name": "com.oho.testingdeployment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537212407978-68g9hrq0pkoldh36pinca9l2ceve7krl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEcKgsFcOFbPcJgPEJSYi-RjH9hqzL9kI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537212407978-68g9hrq0pkoldh36pinca9l2ceve7krl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "537212407978-0bmkblgq32iiltok37hu3qptmfjor9ko.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.oho.testingdeployment"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

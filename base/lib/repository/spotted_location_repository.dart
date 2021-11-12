@@ -55,10 +55,11 @@ class SpottedLocationRepository implements ISpottedLocationRepository {
 
   @override
   Future<dynamic> getLocationDetails(String token, int id) async {
+    Response response;
     try {
       //   var result;
 
-      Response response = await get(
+      response = await get(
         Uri.parse(baseUrl + "/location/$id"),
         headers: {
           'X-Organization-Code': header_x_portal,
@@ -67,15 +68,11 @@ class SpottedLocationRepository implements ISpottedLocationRepository {
         },
       );
 
-      if (response.statusCode == 200) {
-        // List<dynamic> parsed = json.decode(response.body);
-        // result = parsed.map((val) => EventModel.fromJson(val)).toList();
-      }
-
-      return SpottedLocation('Test', null, null, null, null, null, null, null,
-          null, null, null, null, null, null);
-    } on Exception catch (_) {
-      throw _;
+      response = getResponse(response);
+    } on SocketException catch (_) {
+      throw FetchDataException('no internet connection');
     }
+
+    return response;
   }
 }

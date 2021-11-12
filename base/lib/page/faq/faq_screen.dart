@@ -1,7 +1,6 @@
-import 'package:base/ui/widgets/components/logo.dart';
-import 'package:base/ui/widgets/faq/faq_expansion_panel.dart';
-import 'package:base/ui/widgets/text/loading_state.dart';
-import 'package:config/flavor_assets.dart';
+import 'package:base/page/ui/widgets/components/logo.dart';
+import 'package:base/page/ui/widgets/faq/faq_expansion_panel.dart';
+import 'package:base/page/ui/widgets/text/loading_state.dart';
 import 'package:flutter/material.dart';
 import 'package:base/models/faq_item.dart';
 import 'package:base/state/faq_view_model.dart';

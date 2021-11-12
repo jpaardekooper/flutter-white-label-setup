@@ -1,8 +1,8 @@
 import 'package:base/models/contact_user.dart';
+import 'package:base/page/ui/widgets/contact/tiles/contact_tile.dart';
+import 'package:base/page/ui/widgets/text/error_message.dart';
+import 'package:base/page/ui/widgets/text/loading_state.dart';
 import 'package:base/state/contact_state.dart';
-import 'package:base/ui/widgets/contact/tiles/contact_tile.dart';
-import 'package:base/ui/widgets/text/error_message.dart';
-import 'package:base/ui/widgets/text/loading_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +34,8 @@ class _BoardMemberOverviewState extends State<BoardMemberOverview>
             : LoadingState(message: 'Bestuursleden')
         : ListView.builder(
             physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
             shrinkWrap: true,
             itemCount: contactState.listOfBoardMembers.length,
             itemBuilder: (BuildContext ctxt, int index) {

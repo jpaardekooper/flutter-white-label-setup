@@ -1,8 +1,7 @@
 import 'package:base/models/events.dart';
-import 'package:base/ui/widgets/components/logo.dart';
-import 'package:base/ui/widgets/event/event_tiles.dart';
-import 'package:base/ui/widgets/text/loading_state.dart';
-import 'package:config/flavor_assets.dart';
+import 'package:base/page/ui/widgets/components/logo.dart';
+import 'package:base/page/ui/widgets/event/event_tiles.dart';
+import 'package:base/page/ui/widgets/text/loading_state.dart';
 import 'package:flutter/material.dart';
 import 'package:base/state/event_state.dart';
 import 'package:provider/provider.dart';
@@ -36,25 +35,31 @@ class _EventScreenState extends State<EventScreen> {
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
-      body: events.eventsList.isEmpty
-          ? LoadingState(message: 'Evenementen worden ingeladen')
-          : RefreshIndicator(
-              onRefresh: _refreshData,
-              child: Scrollbar(
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                  shrinkWrap: true,
-                  itemCount: events.eventsList.length,
-                  itemExtent: 230,
-                  itemBuilder: (BuildContext ctxt, int index) {
-                    Events _event = events.eventsList[index];
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SafeArea(
+          child: events.eventsList.isEmpty
+              ? LoadingState(message: 'Evenementen worden ingeladen')
+              : RefreshIndicator(
+                  onRefresh: _refreshData,
+                  child: Scrollbar(
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics(),
+                      ),
+                      shrinkWrap: false,
+                      itemCount: events.eventsList.length,
+                      itemExtent: 250,
+                      itemBuilder: (BuildContext ctxt, int index) {
+                        Events _event = events.eventsList[index];
 
-                    return EventTiles(_event);
-                  },
+                        return EventTiles(_event);
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ),
+        ),
+      ),
     );
   }
 }

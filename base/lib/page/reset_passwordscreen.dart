@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'package:base/ui/widgets/components/logo.dart';
-import 'package:config/flavor_assets.dart';
+import 'package:base/page/ui/widgets/components/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:flutter_config/flutter_config.dart';
@@ -35,9 +34,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   _submit() async {
+    dynamic result;
     try {
-      var result;
-
       Map<String, dynamic> loginData = {
         'emailAddress': usernameController.text,
       };
@@ -54,7 +52,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       );
 
       if (response.statusCode == 200) {
-        result = response.body;
+        return result = response.body;
       }
 
       // return result;

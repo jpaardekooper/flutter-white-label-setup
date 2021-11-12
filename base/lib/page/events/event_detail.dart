@@ -1,10 +1,8 @@
+import 'package:base/page/ui/widgets/components/logo.dart';
+import 'package:base/page/ui/widgets/event/buttons/toggle_edit.dart';
+import 'package:base/page/ui/widgets/event/event_header.dart';
+import 'package:base/state/app_editing_state.dart';
 import 'package:base/state/event_state.dart';
-import 'package:base/ui/widgets/components/buttons/event_back_button.dart';
-import 'package:base/ui/widgets/event/buttons/toggle_edit.dart';
-import 'package:base/ui/widgets/components/logo.dart';
-import 'package:base/ui/widgets/event/event_header.dart';
-import 'package:config/flavor_assets.dart';
-import 'package:dart_twitter_api/api/media/data/media.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,26 +23,20 @@ class _EventDetailState extends State<EventDetail> {
 
   @override
   Widget build(BuildContext context) {
-    var eventState = Provider.of<EventState>(context, listen: false);
-
-    return Dismissible(
-      key: UniqueKey(),
-      direction: DismissDirection.startToEnd,
-      onDismissed: (DismissDirection direction) {
-        eventState.toggleEditToFalse();
-        Navigator.of(context).pop();
-      },
+    return ChangeNotifierProvider<AppEditingState>(
+      create: (_) => AppEditingState(),
       child: Scaffold(
         appBar: AppBar(
           title: AppbarLogo(),
           backgroundColor: Colors.white,
           centerTitle: true,
-          leading: AppBackButton(function: eventState.toggleEditToFalse),
-          actions: [
-            ToggleEditEvent(
-              function: eventState.toggleEdit,
-            )
-          ],
+          leading: BackButton(
+            color: Colors.black,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          actions: [ToggleEditEvent()],
         ),
         body: ListView(
           shrinkWrap: true,

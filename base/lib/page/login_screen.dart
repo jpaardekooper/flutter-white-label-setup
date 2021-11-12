@@ -1,8 +1,8 @@
 import 'package:base/page/reset_passwordscreen.dart';
-import 'package:base/ui/widgets/components/logo.dart';
-import 'package:base/ui/widgets/login/password_textfield.dart';
-import 'package:base/ui/widgets/login/username_textfield.dart';
-import 'package:config/flavor_assets.dart';
+import 'package:base/page/ui/widgets/components/logo.dart';
+import 'package:base/page/ui/widgets/login/password_textfield.dart';
+import 'package:base/page/ui/widgets/login/username_textfield.dart';
+
 import 'package:flutter/material.dart';
 import 'package:base/state/auth_state.dart';
 import 'package:provider/provider.dart';

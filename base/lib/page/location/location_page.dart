@@ -1,8 +1,12 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:base/models/spotted_location.dart';
+import 'package:base/page/ui/widgets/empty_state.dart';
+import 'package:base/page/ui/widgets/location/location_tiles.dart';
 import 'package:base/state/location_state.dart';
-import 'package:base/ui/widgets/components/logo.dart';
-import 'package:base/ui/widgets/location/location_search.dart';
-import 'package:base/ui/widgets/text/loading_state.dart';
+import 'package:base/page/ui/widgets/components/logo.dart';
+import 'package:base/page/ui/widgets/location/location_search.dart';
+import 'package:base/page/ui/widgets/text/loading_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,14 +18,11 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
-  late Future<List<SpottedLocation?>?> data;
-
   @override
   void initState() {
     super.initState();
 
-    data =
-        Provider.of<LocationState>(context, listen: false).fetchLocationData();
+    Provider.of<LocationState>(context, listen: false).fetchLocationData();
   }
 
   @override
@@ -34,66 +35,42 @@ class _LocationPageState extends State<LocationPage> {
         automaticallyImplyLeading: false,
         centerTitle: true,
       ),
-      body: RefreshIndicator(
-        onRefresh: locationState.fetchLocationData,
-        child: LayoutBuilder(builder: (context, constraints) {
-          return ListView(
-            physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        tooltip: 'Een nieuwe locatie toevoegen',
+        child: Icon(Icons.add),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(color: Colors.white, child: LocationSearch()),
+            SizedBox(
+              height: 16,
             ),
-            shrinkWrap: false,
-            children: [
-              LocationSearch(),
-              FutureBuilder<List<SpottedLocation?>?>(
-                future: data,
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                    case ConnectionState.waiting:
-                      return Container(
-                        constraints: BoxConstraints(
-                          minHeight: constraints.maxHeight - 100,
+            Expanded(
+              child: locationState.locationList.isEmpty
+                  ? EmptyState(message: 'Geen locaties gevonden')
+                  : RefreshIndicator(
+                      onRefresh: locationState.fetchLocationData,
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics(),
                         ),
-                        child: Center(
-                          child: LoadingState(
-                              message: 'Locaties worden opgehaald'),
-                        ),
-                      );
-                    case ConnectionState.done:
-                      if (snapshot.hasError || snapshot.data == null) {
-                        return Container(
-                            constraints: BoxConstraints(
-                              minHeight: constraints.maxHeight - 100,
-                            ),
-                            child: Center(
-                              child: Text('Er zijn nog geen locaties gevonden'),
-                            ));
-                      } else {
-                        //als alles goed gaat
-                        //  return AdvancedSliverAppBar(page: widget.page);
-                        return Container();
-                        // ListView(
-                        //   shrinkWrap: true,
-                        //   physics: const ClampingScrollPhysics(),
-                        //   children: [
-                        //     Header(
-                        //       maxHeight,
-                        //       minHeight,
-                        //       widget.page,
-                        //     ),
-                        //     ContactFormView()
-                        //   ],
-                        // );
-                      }
-
-                    default:
-                      return Container();
-                  }
-                },
-              ),
-            ],
-          );
-        }),
+                        shrinkWrap: false,
+                        itemExtent: 250,
+                        itemCount: locationState.locationList.length,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          SpottedLocation _location =
+                              locationState.locationList[index];
+                          return LocationTiles(_location);
+                        },
+                      ),
+                    ),
+            ),
+          ],
+        ),
       ),
     );
 

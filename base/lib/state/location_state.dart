@@ -17,8 +17,6 @@ class LocationState with ChangeNotifier {
 
   final LocationController _eventController = LocationController();
 
-  bool get editStatus => _editStatus;
-
   List<SpottedLocation> get locationList => _locationList;
 
   SpottedLocation get selectedLocation => _selectedLocation;
@@ -26,8 +24,6 @@ class LocationState with ChangeNotifier {
   List<SpottedLocation> get searchList => _searchList;
 
   List<SpottedLocation> _searchList = [];
-
-  bool _editStatus = false;
 
   List<SpottedLocation> _locationList = [];
 
@@ -64,6 +60,13 @@ class LocationState with ChangeNotifier {
   }
 
   Future<List<SpottedLocation>?> fetchLocationData() async {
+    _locationList.clear();
+    for (int i = 0; i < 10; i++) {
+      _locationList.add(
+        SpottedLocation('Test$i', 'Test$i', 'Test$i', 'Test$i', 'Test$i', null,
+            null, null, null, null, null, null, null, null),
+      );
+    }
     try {
       if (await authState.refreshSession()) {
         Response result = await _eventController
@@ -74,8 +77,8 @@ class LocationState with ChangeNotifier {
           _locationList =
               parsed.map((val) => SpottedLocation.fromJson(val)).toList();
         }
+
         notifyListeners();
-        return _locationList;
       }
     } on Exception catch (_) {
       return null;
@@ -92,9 +95,8 @@ class LocationState with ChangeNotifier {
     }
   }
 
-  changeEditState() {
-    _editStatus = !_editStatus;
-
+  void setselectedLocation(SpottedLocation location) {
+    _selectedLocation = location;
     notifyListeners();
   }
 

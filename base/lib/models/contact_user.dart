@@ -67,22 +67,27 @@ class ContactUser with ChangeNotifier {
 
   updateFirstname(String value) {
     firstName = value;
+    notifyListeners();
   }
 
   updateInsertion(String value) {
     insertion = value;
+    notifyListeners();
   }
 
   updateLastname(String value) {
     lastName = value;
+    notifyListeners();
   }
 
   updatePhonenumber(String value) {
     phoneNumber = value;
+    notifyListeners();
   }
 
   updateEmail(String value) {
     emailAddress = value;
+    notifyListeners();
   }
 
   updateProfilePictureData(XFile value) async {
@@ -99,54 +104,67 @@ class ContactUser with ChangeNotifier {
 
   updateCompanyname(String value) {
     companyName = value;
+    notifyListeners();
   }
 
   updateProffesion(String value) {
     profession = value;
+    notifyListeners();
   }
 
   updateAddress(String value) {
     address = value;
+    notifyListeners();
   }
 
   updateZipcode(String value) {
     zipcode = value;
+    notifyListeners();
   }
 
   updateCity(String value) {
     city = value;
+    notifyListeners();
   }
 
   updateCountry(String value) {
     country = value;
+    notifyListeners();
   }
 
   updateDescription(String value) {
     description = value;
+    notifyListeners();
   }
 
   updateWebsite(String value) {
     website = value;
+    notifyListeners();
   }
 
   updateLinkedIn(String value) {
     linkedIn = value;
+    notifyListeners();
   }
 
   updateFacebook(String value) {
     facebook = value;
+    notifyListeners();
   }
 
   updateTwitter(String value) {
     twitter = value;
+    notifyListeners();
   }
 
   updateInstagram(String value) {
     instagram = value;
+    notifyListeners();
   }
 
   updateBoardmemberFunction(String value) {
     boardMemberFunction = value;
+    notifyListeners();
   }
 
   updateIsFavorite(bool value) {

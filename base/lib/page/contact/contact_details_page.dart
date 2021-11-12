@@ -1,12 +1,7 @@
 import 'package:base/models/contact_user.dart';
-import 'package:base/page/contact/contact_detail_skeleton.dart';
-import 'package:base/ui/widgets/components/buttons/contact_back_button.dart';
-import 'package:base/ui/widgets/components/buttons/toggle_edit_contact.dart';
-import 'package:base/ui/widgets/components/logo.dart';
-import 'package:base/ui/widgets/contact/forms/contact_form_view.dart';
-import 'package:base/ui/widgets/contact/ui/contact_header.dart';
-import 'package:base/ui/widgets/text/loading_state.dart';
-import 'package:config/flavor_assets.dart';
+import 'package:base/page/ui/widgets/contact/contact_detail_skeleton.dart';
+import 'package:base/page/ui/widgets/text/loading_state.dart';
+import 'package:base/state/app_editing_state.dart';
 import 'package:flutter/material.dart';
 import 'package:base/state/contact_state.dart';
 import 'package:provider/provider.dart';
@@ -39,72 +34,31 @@ class _ContactDetailsState extends State<ContactDetails> {
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<ContactState>(context, listen: false);
+    return ChangeNotifierProvider<AppEditingState>(
+      create: (_) => AppEditingState(),
+      child: Scaffold(
+        key: _scaffoldKey,
+        body: FutureBuilder<ContactUser?>(
+          future: checkUser,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return LoadingState(message: 'Gebruiker informatie');
+              case ConnectionState.done:
+                if (snapshot.hasError || snapshot.data == null) {
+                  return Center(
+                    child: Text('Er is iets foutgegaan bij het ophalen'),
+                  );
+                } else {
+                  //als alles goed gaat
+                  return AdvancedSliverAppBar(page: widget.page);
+                }
 
-    return WillPopScope(
-      onWillPop: () {
-        provider.setEditProfileToFalse();
-        Navigator.pop(context);
-        return Future.value(true);
-      },
-      child: Dismissible(
-        key: UniqueKey(),
-        direction: DismissDirection.startToEnd,
-        onDismissed: (DismissDirection direction) {
-          provider.setEditProfileToFalse();
-
-          Navigator.of(context).pop();
-        },
-        child: Scaffold(
-          key: _scaffoldKey,
-          // appBar: AppBar(
-          //   backgroundColor: Colors.white,
-          //   title: Logo(scale: FlavorAssets.scale),
-          //   centerTitle: true,
-          //   automaticallyImplyLeading: false,
-          //   leading: ContactBackButton(
-          //     function: provider.setEditProfileToFalse,
-          //   ),
-          //   actions: [
-          //     ToggleEditContact(
-          //       function: provider.toggleEditProfile,
-          //     )
-          //   ],
-          // ),
-          body: FutureBuilder<ContactUser?>(
-            future: checkUser,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                case ConnectionState.waiting:
-                  return LoadingState(message: 'Gebruiker informatie');
-                case ConnectionState.done:
-                  if (snapshot.hasError || snapshot.data == null) {
-                    return Center(
-                      child: Text('Er is iets foutgegaan bij het ophalen'),
-                    );
-                  } else {
-                    //als alles goed gaat
-                    return AdvancedSliverAppBar(page: widget.page);
-                    // ListView(
-                    //   shrinkWrap: true,
-                    //   physics: const ClampingScrollPhysics(),
-                    //   children: [
-                    //     Header(
-                    //       maxHeight,
-                    //       minHeight,
-                    //       widget.page,
-                    //     ),
-                    //     ContactFormView()
-                    //   ],
-                    // );
-                  }
-
-                default:
-                  return LoadingState(message: 'Gebruiker informatie');
-              }
-            },
-          ),
+              default:
+                return LoadingState(message: 'Gebruiker informatie');
+            }
+          },
         ),
       ),
     );

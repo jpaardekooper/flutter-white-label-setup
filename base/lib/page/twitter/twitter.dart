@@ -1,4 +1,4 @@
-import 'package:base/ui/widgets/components/logo.dart';
+import 'package:base/page/ui/widgets/components/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:base/state/social_state.dart';
 import 'package:provider/provider.dart';
@@ -51,16 +51,17 @@ class _SocialScreenState extends State<SocialScreen> {
                   itemBuilder: (BuildContext context, index) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8.0),
-                      child: EmbeddedTweetView(
-                        TweetVM.fromApiModel(
-                            socialState.tweetList[index], null),
-                        darkMode: false,
-                        useVideoPlayer: true,
-                        videoHighQuality: false,
+                          vertical: 8.0, horizontal: 8),
+                      child: SafeArea(
+                        child: EmbeddedTweetView(
+                          TweetVM.fromApiModel(
+                              socialState.tweetList[index], null),
+                          darkMode: false,
+                          useVideoPlayer: true,
+                          videoHighQuality: false,
+                        ),
                       ),
                     );
-                    //          return Container();
                   },
                 ),
               ),

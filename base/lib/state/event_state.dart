@@ -26,23 +26,6 @@ class EventState with ChangeNotifier {
   EventUsers? _selectedUserForEvent;
   EventUsers? get selectedUserForEvent => _selectedUserForEvent;
 
-  bool _edit = false;
-  bool get edit => _edit;
-
-  toggleEdit() {
-    _edit = !_edit;
-    notifyListeners();
-  }
-
-  toggleEditToFalse() {
-    _edit = false;
-    going.clear();
-    notGoing.clear();
-    maybeGoing.clear();
-
-    notifyListeners();
-  }
-
   List<Events> _eventsList = [];
   List<Events> get eventsList => _eventsList;
 
@@ -56,11 +39,12 @@ class EventState with ChangeNotifier {
         if (result.statusCode == 200) {
           List<dynamic> parsed = json.decode(result.body) as List;
           _eventsList = parsed.map((val) => Events.fromJson(val)).toList();
+
+          notifyListeners();
         }
-        notifyListeners();
       }
     } on Exception catch (_) {
-      return false;
+      return [];
     }
   }
 
@@ -196,14 +180,11 @@ class EventState with ChangeNotifier {
 
         // print(result);
         // print('de response is ${result.statusCode}');
-        if (result.statusCode == 200 || result.statusCode == 204) {
-          print('status is geupdate');
-        }
+        if (result.statusCode == 200 || result.statusCode == 204) {}
 
         notifyListeners();
       }
     } on Exception catch (_) {
-      print(_);
       return null;
     }
   }
@@ -211,6 +192,8 @@ class EventState with ChangeNotifier {
   Future<bool> updateSelectedEventInformation() async {
     try {
       if (await authState.refreshSession()) {
+        print(selectedEvent.eventUsers!.length);
+
         Map<String, dynamic> eventForm = {
           "title": selectedEvent.title,
           "description": selectedEvent.description,
@@ -226,7 +209,6 @@ class EventState with ChangeNotifier {
           "mayTakeGuest": selectedEvent.mayTakeGuest,
           "organizationId": selectedEvent.organizationId,
           "id": selectedEvent.id,
-          "eventUsers": selectedEvent.eventUsers
         };
 
         Response result = await _eventController.saveSelectedEventInfo(
@@ -234,14 +216,12 @@ class EventState with ChangeNotifier {
             selectedEvent.id!,
             eventForm);
         if (result.statusCode == 200 || result.statusCode == 204) {
-          print('GING GOED');
           return true;
         } else {
-          print('GING NIET GOED');
+          print(result.body);
           return false;
         }
       } else {
-        print('GING GOED');
         return false;
       }
     } on Exception catch (_) {
