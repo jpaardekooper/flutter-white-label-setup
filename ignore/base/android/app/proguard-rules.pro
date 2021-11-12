@@ -1,1 +1,0 @@
--keep class com.contactenapp.oho2021.BuildConfig { *; }
