@@ -1,4 +1,4 @@
-# ToDo
+# white-label-example
 
 A new Flutter project.
 
